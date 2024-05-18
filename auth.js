@@ -1,4 +1,5 @@
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import bcrypt from 'bcryptjs';
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import FacebookProvider from 'next-auth/providers/facebook';
@@ -6,6 +7,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import connectMongo from './dbConnect/connectMongo';
 import clientPromise from './lib/mongoClientPromise';
 import User from './models/User';
+
 export const {
     handlers: { GET, POST },
     auth,
@@ -28,7 +30,10 @@ export const {
                         email: credentials.email,
                     });
                     if (user) {
-                        const isMatch = user.password === credentials.password;
+                        const isMatch = await bcrypt.compare(
+                            credentials.password,
+                            user.password
+                        );
 
                         if (isMatch) {
                             return user;

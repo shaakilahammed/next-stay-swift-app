@@ -24,3 +24,24 @@ export const login = async (formData) => {
         throw error;
     }
 };
+
+export const register = async (formData) => {
+    try {
+        const user = Object.fromEntries(formData);
+        const response = await fetch(
+            'http://localhost:3000/api/auth/register',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            }
+        );
+        if (response.status === 201) {
+            return { success: true };
+        }
+    } catch (error) {
+        return { error: error.message };
+    }
+};
