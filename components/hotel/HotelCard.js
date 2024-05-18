@@ -1,16 +1,19 @@
-import HotelSummaryInfo from "./HotelSummaryInfo";
+import Image from 'next/image';
+import HotelSummaryInfo from './HotelSummaryInfo';
 
-const HotelCard = () => {
-  return (
-    <div className="flex gap-6 border border-gray/20 p-4 rounded-md">
-      <img
-        src="./assets/images/image-1.png"
-        className="max-h-[162px] max-w-[240px]"
-        alt=""
-      />
-      <HotelSummaryInfo fromListPage={true} />
-    </div>
-  );
+const HotelCard = ({ hotel }) => {
+    return (
+        <div className="flex gap-6 border border-gray/20 p-4 rounded-md">
+            <Image
+                src={hotel?.thumbNailUrl}
+                className="max-h-[162px] max-w-[240px]"
+                height={162}
+                width={240}
+                alt={hotel?.name}
+            />
+            <HotelSummaryInfo fromListPage={true} hotel={hotel} />
+        </div>
+    );
 };
 
 export default HotelCard;

@@ -2,10 +2,7 @@ import HotelList from '@/components/hotel/HotelList';
 import Filter from '@/components/search/Filter';
 import Search from '@/components/search/Search';
 
-const HotelsPage = async () => {
-    // const hotels = await getHotels();
-    // console.log(hotels);
-
+const HotelsPage = () => {
     return (
         <>
             <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-no-repeat bg-center pt-[100px] pb-[60px]">
