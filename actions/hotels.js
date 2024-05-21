@@ -9,7 +9,7 @@ import {
     replaceMongoIdInObject,
 } from '@/utils/utils';
 
-export const getHotels = async (destination, checkin, checkout) => {
+export const getHotels = async (destination, checkin, checkout, category) => {
     try {
         await connectMongo();
         const regex = new RegExp(destination, 'i');
@@ -24,6 +24,12 @@ export const getHotels = async (destination, checkin, checkout) => {
             ])
             .lean();
         let allHotels = hotels;
+        if (category) {
+            const categoriesToMatch = category.split('|');
+            allHotels = allHotels.filter((hotel) =>
+                categoriesToMatch.includes(hotel.propertyCategory.toString())
+            );
+        }
         if (checkin && checkout) {
             // eslint-disable-next-line no-undef
             allHotels = await Promise.all(
