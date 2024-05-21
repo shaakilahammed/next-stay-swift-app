@@ -105,3 +105,13 @@ export const getReviewsbyHotelId = async (id) => {
         console.log(error);
     }
 };
+
+export const getBookingsByUserId = async (id) => {
+    try {
+        await connectMongo();
+        const bookings = await Booking.find({ userId: id }).lean();
+        return replaceMongoIdInArray(bookings);
+    } catch (error) {
+        console.log(error);
+    }
+};
