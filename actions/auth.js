@@ -1,6 +1,8 @@
 'use server';
 
 import { signIn } from '@/auth';
+import User from '@/models/User';
+import { replaceMongoIdInObject } from '@/utils/utils';
 import { AuthError } from 'next-auth';
 
 export const login = async (formData) => {
@@ -44,4 +46,9 @@ export const register = async (formData) => {
     } catch (error) {
         return { error: error.message };
     }
+};
+
+export const getUseryEmail = async (email) => {
+    const user = await User.findOne({ email: email }).lean();
+    return replaceMongoIdInObject(user);
 };
